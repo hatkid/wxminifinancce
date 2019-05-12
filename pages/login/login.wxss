@@ -1,0 +1,31 @@
+.container {
+  background-color: #fff;
+}
+
+.page-body-info {
+  text-align: center;
+  margin-top: 50rpx;
+}
+
+.userinfo {
+  width: 200rpx;
+  height: 200rpx;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: flex;
+  overflow: hidden;
+}
+
+.ad_popError {
+  background: #de352d;
+  color: #fff;
+  height: 58rpx;
+  line-height: 58rpx;
+  font-size: 24rpx;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+}

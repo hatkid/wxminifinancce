@@ -1,0 +1,55 @@
+<!--index.wxml-->
+<view class="tool-tip " wx:if="{{popMsg}}">
+    <text class="{{popType}}">{{popMsg}}</text>
+</view>
+<view id="index">
+    <view class="topbj light text-center">
+        <view class="total ">
+            <view class="p num">{{mainPageData.companyFinancesCount||0}}</view>
+            <view class="p">供应商数量(家)</view>
+        </view>
+        <view class="row sub-total row-no-padding">
+            <view class="col">
+                <view class="p">{{mainPageData.runningAccountsCount || 0}}</view>
+                <view class="p">流水记录(条)</view>
+            </view>
+            <view class="col">
+                <view class="p">{{mainPageData.salesRecordsCount || 0 }}</view>
+                <view class="p">销售记录(条)</view>
+            </view>
+        </view>
+    </view>
+    <view style="margin-top: 0rem;">
+        <view class="card">
+            <view class="row  light-bg row-center main-list">
+                <navigator url="../companyfinance/companyfinance" open-type="navigate" class="col border-rb">
+                    <text class="icon iconfont icon-dengjixinxi energized"></text>
+                    <view>
+                        <view class="h5">采购管理</view>
+                    </view>
+                </navigator>
+                <navigator url="../companyfinance/companyfinance" open-type="navigate" class="col border-b">
+                    <text class="icon iconfont icon-jiedanshouhuo positive"></text>
+                    <view>
+                        <view class="h5">采购明细</view>
+                    </view>
+                </navigator>
+            </view>
+            <view class="row  light-bg row-center  main-list">
+                <navigator url="" open-type="navigate" class="col border-r">
+                    <text class="icon iconfont icon-sponsorfill positive"></text>
+                    <view>
+                        <view class="h5">流水明细</view>
+                    </view>
+                </navigator>
+                <navigator url="" open-type="navigate" class="col">
+                    <text class="icon iconfont icon-friendaddfill royal"></text>
+                    <view>
+                        <view class="h5">销售报表</view>
+                    </view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+
+</view>

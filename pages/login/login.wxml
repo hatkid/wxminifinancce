@@ -1,0 +1,23 @@
+<view class='container'>
+  <form bindsubmit="loginSubmit">
+      <view class='page-body-info'>
+        <open-data type="userAvatarUrl" class='userinfo'></open-data>
+      </view>
+
+
+      <!-- 账号密码登录 -->
+      <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
+      <view class="item item-input">
+        <text class=" iconfont icon-my placeholder-icon"></text>
+        <input type="text" id="userName" name="userName"  placeholder="账号" bindinput='userNameInput'/>
+      </view>
+
+      <view class="item item-input">
+        <text class=" iconfont  icon-lock placeholder-icon"></text>
+        <input type="text" password="true" id="password" maxlength="18" name="password" placeholder="密码" bindinput='passwordInput'/>
+      </view>
+    <view class="padding-horizontal">
+      <button formType="submit" hover-class="button-hover" class="positive-bg light " bindtap='loginSubmit'>登录</button>
+    </view>
+  </form>
+</view>

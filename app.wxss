@@ -1,6 +1,7 @@
 /**app.wxss**/
 @import "/utils/fonts/font.wxss";
 @import "/utils/ionic.wxss";
+@import "/font/iconfont.wxss";
 
 /*.container {
     height: 100%;
