@@ -1,123 +1,107 @@
+//获取应用实例
+var app = getApp();
+var util = require('../../utils/util.js');
+var config = require('../../utils/config.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    uhide: 0
+    pageNo : 1,
+    pageSize : 3,
+    companyFinanceListCount : 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var that = this;
-
-    var data = {
-      "datas": [
-        {
-          "id": 1,
-          "imgurl": "../../images/car.png",
-          "useDate": "2017-12-22",
-          "cx": "奇瑞EQ1",
-          "time": "1小时",
-          "feiyong": "20元"
-        },
-        {
-          "id": 2,
-          "imgurl": "../../images/car.png",
-          "useDate": "2017-12-22",
-          "cx": "奇瑞EQ1",
-          "time": "1小时",
-          "feiyong": "20元"
-        },
-        {
-          "id": 3,
-          "imgurl": "../../images/car.png",
-          "useDate": "2017-12-22",
-          "cx": "奇瑞EQ1",
-          "time": "1小时",
-          "feiyong": "20元"
-        },
-        {
-          "id": 4,
-          "imgurl": "../../images/car.png",
-          "useDate": "2017-12-22",
-          "cx": "奇瑞EQ1",
-          "time": "1小时",
-          "feiyong": "20元"
-        }
-      ]
+    var param = {
+      pageNo:this.data.pageNo,
+      pageSize:this.data.pageSize
     };
-    //console.log(data.datas);
-    //设置车辆展示信息
-    that.setData({
-      carInfoData: data.datas
-    })
-  },
-
-  //切换隐藏和显示 
-  toggleBtn: function (event) {
-    var that = this;
-    var toggleBtnVal = that.data.uhide;
-    var itemId = event.currentTarget.id;
-    if (toggleBtnVal == itemId) {
-      that.setData({
-        uhide: 0
-      })
-    } else {
-      that.setData({
-        uhide: itemId
-      })
-    }
+    this.getCompanyFinanceList(param);
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
+  onReachBottom: function() {
+    var pageNo = this.data.pageNo + 1;
+    var maxPageNo = this.data.companyFinanceListCount % this.data.pageSize == 0 ? this.data.companyFinanceListCount / this.data.pageSize : parseInt(this.data.companyFinanceListCount / this.data.pageSize) + 1
+    console.log(pageNo);
+    console.log(maxPageNo);
+    if (pageNo > maxPageNo) {
+      console.log("already end");
+      return ;
+    }
+    var param = {
+      pageNo: pageNo,
+      pageSize: this.data.pageSize
+    };
+    this.getCompanyFinanceList(param);
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
+  },
+
+  /**
+   * 获取采购管理列表
+   */
+  getCompanyFinanceList : function(data) {
+    var that = this;
+    util.https(config.APIURL.getCompanyFinanceListUrl, "POST", data,
+      function (data) {
+        console.log(data);
+        if (data.code == 0) {
+          that.setData({
+            companyFinanceListData : data.data.data,
+            companyFinanceListCount : data.data.totalCount
+          })
+        }
+      }
+    )
   }
+
 })

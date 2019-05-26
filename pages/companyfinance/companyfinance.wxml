@@ -1,35 +1,74 @@
-<!--pages/list/list.wxml-->
-<view class='container'>
-  <!-- 订单列表 -->
-  <block wx:for-items="{{carInfoData}}">
-    <view class='card  b-shadow' bindtap='toggleBtn' id="{{item.id}}">
-      <view class='nearCard-fl'>
-        <image src='{{item.imgurl}}'></image>
+<!--xs.wxml-->
+<view class="container {{main.mainDisplay?'home':'active'}}">
+
+  <!--头部-->
+  <view class="header">
+    <image class="xs-logo" src="/images/core/xs.png"></image>
+    <!--搜索框-->
+    <view class="search-input">
+      <view class="search-icon-box">
+        <image class="search-icon" src="/images/core/xs/search-sign.png"></image>
       </view>
-      <view class='nearCard-fr'>
-        <view>日期：
-          <text class='c-green'>{{item.useDate}}</text>
+      <form class="input-form" bindreset="bindClearSearchTap" bindsubmit="bindConfirmSearchTap">
+        <input class="input-text" value="{{header.defaultValue}}" auto-focus="{{!header.defaultValue}}" bindinput="bindSearchInput" type="text" name="search" placeholder="姓名 / 学号 / 班级" />
+        <button class="input-clear-button" formType="reset" hover-class="none" wx:if="{{header.inputValue}}">
+          <image class="clear-icon" src="/images/core/xs/clear.png"></image>
+        </button>
+        <button class="input-confirm-button" formType="submit" hover-class="none">
+          <text>搜索</text>
+        </button>
+      </form>
+    </view>
+  </view>
+
+  <!--页面主体部分-->
+  <view class="main">
+    <!--主体部分内容列表-->
+    <view class="main-list" wx:for="{{companyFinanceListData}}">
+      <!--列表的一个元素的模板结构-->
+      <view class="list-item">
+        <!--信息直接显示部分-->
+        <view class="item" data-index="{{index}}" bindtap="bindOpenList">
+          <view class="item-content" >
+            <view >
+              <view>
+                <view>
+                  供应商名称：
+                  <text class="state-name-active">{{item.companyName}}</text>
+                </view>
+              </view>
+              <view>
+              <view style='float:left;width:50%;'>
+                <view>
+                  贷款金额：
+                  <text class="state-name-active">{{item.loanAmount}}</text> </view>
+                <view>
+                  年初欠款：
+                  <text class="state-name-active">{{item.arrears}}</text> </view>
+              </view>
+              <view style='float:right;width:50%;'>
+                <view>
+                  已付款：
+                  <text class="state-name-active">{{item.paid}}</text> </view>
+                <view>
+                  总欠款额：
+                  <text class="state-name-active">{{item.totalArrears}}</text> </view>
+              </view>
+              </view>
+            </view>
+          </view>
         </view>
-        <view>车型：
-          <text class='c-green'>{{item.cx}}</text>
-        </view>
-        <view>时长：
-          <text class='c-green'>{{item.time}}</text>
-        </view>
-        <view>费用：
-          <text class='c-green'>{{item.feiyong}}</text>
-        </view>
-      </view>
-      <view class='down clearfix {{uhide==item.id?"":"hidden"}}'>
-        <view class='ml30'>启用时间：2018.01.01 11:33</view>
-        <view class='ml30'>结束时间：2018.01.01 11:33</view>
-        <view class='ml30'>租赁地区：舟山市桃花岛景区海湾浪琴</view>
-        <view class='feedBack'>意见反馈</view>
       </view>
     </view>
-  </block>
-  <view class="addbtn">
-  	<navigator url="/pages/add/add?dayId={{dayId}}" open-type="redirect">
-		<i class="icon iconfont icon-yuanquanjiahao"></i></navigator> 
+    <!--提示消息-->
+    <view class="search-message">
+      <text class="message-title">{{main.message}}</text>
+    </view>
   </view>
+
+  <!--提示消息-->
+  <view class="search-message" hidden="{{messageObj.messageDisplay}}">
+    <text class="message-title">{{messageObj.message}}</text>
+  </view>
+
 </view>

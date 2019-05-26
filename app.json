@@ -1,12 +1,11 @@
 {
   "pages": [
-    "pages/main/main",
-    "pages/companyfinance/companyfinance",
-    "pages/login/login",
     
+    "pages/companyfinance/companyfinance",
+    "pages/main/main",
+    "pages/login/login",
     "pages/add/add",
     "pages/list/list",
-    
     "pages/logs/logs"
   ],
   "window": {
@@ -24,5 +23,6 @@
     "scope.userLocation": {
       "desc": "假设已经获取位置了"
     }
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
