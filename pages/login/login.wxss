@@ -4,7 +4,8 @@
 
 .page-body-info {
   text-align: center;
-  margin-top: 50rpx;
+  padding-top: 50rpx;
+  padding-bottom: 50rpx;
 }
 
 .userinfo {

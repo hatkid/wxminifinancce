@@ -1,74 +1,54 @@
-<!--xs.wxml-->
-<view class="container {{main.mainDisplay?'home':'active'}}">
+<view class="container">
 
-  <!--头部-->
-  <view class="header">
-    <image class="xs-logo" src="/images/core/xs.png"></image>
-    <!--搜索框-->
-    <view class="search-input">
-      <view class="search-icon-box">
-        <image class="search-icon" src="/images/core/xs/search-sign.png"></image>
-      </view>
-      <form class="input-form" bindreset="bindClearSearchTap" bindsubmit="bindConfirmSearchTap">
-        <input class="input-text" value="{{header.defaultValue}}" auto-focus="{{!header.defaultValue}}" bindinput="bindSearchInput" type="text" name="search" placeholder="姓名 / 学号 / 班级" />
-        <button class="input-clear-button" formType="reset" hover-class="none" wx:if="{{header.inputValue}}">
+  <!-- 页面搜索部分 显示搜索条件 -->
+  <view class="search">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+      <input class="input-text" bindinput="bindSearchInput" type="text" name="search" placeholder="姓名 / 学号 / 班级" />
+        <button class="input-clear-button" formType="reset" hover-class="none">
           <image class="clear-icon" src="/images/core/xs/clear.png"></image>
         </button>
         <button class="input-confirm-button" formType="submit" hover-class="none">
           <text>搜索</text>
         </button>
-      </form>
-    </view>
+    </form>
   </view>
 
-  <!--页面主体部分-->
+  <!--页面主体部分  列表显示部分-->
+
   <view class="main">
-    <!--主体部分内容列表-->
-    <view class="main-list" wx:for="{{companyFinanceListData}}">
-      <!--列表的一个元素的模板结构-->
-      <view class="list-item">
-        <!--信息直接显示部分-->
-        <view class="item" data-index="{{index}}" bindtap="bindOpenList">
-          <view class="item-content" >
-            <view >
-              <view>
-                <view>
-                  供应商名称：
-                  <text class="state-name-active">{{item.companyName}}</text>
-                </view>
-              </view>
-              <view>
-              <view style='float:left;width:50%;'>
-                <view>
-                  贷款金额：
-                  <text class="state-name-active">{{item.loanAmount}}</text> </view>
-                <view>
-                  年初欠款：
-                  <text class="state-name-active">{{item.arrears}}</text> </view>
-              </view>
-              <view style='float:right;width:50%;'>
-                <view>
-                  已付款：
-                  <text class="state-name-active">{{item.paid}}</text> </view>
-                <view>
-                  总欠款额：
-                  <text class="state-name-active">{{item.totalArrears}}</text> </view>
-              </view>
-              </view>
+    <scroll-view scroll-y style="height:250px;" bindscrolltolower="loadMore">
+      <view class="item {{index%2==0? 'odd':'even'}}" wx:for="{{companyFinanceListData}}">
+        <view style="companyView">
+          供应商名称：
+          <text class="">{{item.companyName}}</text>
+        </view>
+        <view class="otherview">
+          <view class="halfwidth leftfloat">
+            <view class="middleview">
+              贷款金额：
+              <text class="">{{item.loanAmount}}</text>
+            </view>
+            <view>
+              年初欠款：
+              <text class="">{{item.arrears}}</text>
+            </view>
+          </view>
+          <view class="halfwidth rightfloat">
+            <view class="middleview">
+              已付款：
+              <text class="">{{item.paid}}</text>
+            </view>
+            <view>
+              总欠款额：
+              <text class="">{{item.totalArrears}}</text>
             </view>
           </view>
         </view>
       </view>
-    </view>
-    <!--提示消息-->
-    <view class="search-message">
-      <text class="message-title">{{main.message}}</text>
-    </view>
+    </scroll-view>
   </view>
 
-  <!--提示消息-->
-  <view class="search-message" hidden="{{messageObj.messageDisplay}}">
-    <text class="message-title">{{messageObj.message}}</text>
+  <view class="scrollTip" wx:if="{{scrollTip}}">
+    已经滑动到底，无更多数据。
   </view>
-
 </view>

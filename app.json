@@ -1,14 +1,14 @@
 {
   "pages": [
-    
     "pages/companyfinance/companyfinance",
-    "pages/main/main",
     "pages/login/login",
+    "pages/main/main",
     "pages/add/add",
     "pages/list/list",
     "pages/logs/logs"
   ],
   "window": {
+    "enablePullDownRefresh": true,
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#00ACFF",
     "navigationBarTitleText": "财务管理",

@@ -1,8 +1,7 @@
 ;
 // 主机域名
-var host = 'http://localhost/';
-
-host = 'http://118.24.169.20:8081/';
+var host = 'http://localhost:8008/';
+//host = 'http://118.24.169.20:8081/';
 
 var companyFinance = 'companyfinance/'; //采购管理base url
 

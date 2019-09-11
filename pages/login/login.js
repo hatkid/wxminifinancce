@@ -134,6 +134,6 @@ Page({
         popErrorMsg: ''
       });
       clearTimeout(fadeOutTimeout);
-    }, 3000);
+    }, 1000);
   },
 })

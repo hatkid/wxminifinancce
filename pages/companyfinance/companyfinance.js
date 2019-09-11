@@ -8,9 +8,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    pageNo : 1,
-    pageSize : 3,
-    companyFinanceListCount : 0
+    scrollTip:false, // 列表滑动到底的标识
+    pageNo: 1, // 页码
+    pageSize: 4, // 每页数据
+    companyFinanceListData: [], // 
+    companyFinanceListCount: 0, //记录总条数，默认为0
+    screenHeight: 0 //屏幕高度，默认为0
   },
 
   /**
@@ -18,60 +21,67 @@ Page({
    */
   onLoad: function(options) {
     var that = this;
+    // 获取屏幕高度
+    wx.getSystemInfo({
+      success: function(res) {
+        that.setData({
+          screenHeight:res.screenHeight
+        });
+      },
+    })
+    // 初始化查询参数
     var param = {
-      pageNo:this.data.pageNo,
-      pageSize:this.data.pageSize
+      pageNo: this.data.pageNo,
+      pageSize: this.data.pageSize
     };
+    // 查询列表
     this.getCompanyFinanceList(param);
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    console.log("onPullDownRefresh");
+    // 初始化查询参数
+    var param = {
+      pageNo: 1,
+      pageSize: this.data.pageSize
+    };
+    this.setData({
+      pageNo: 1,
+      companyFinanceListData: []
+    });
+    // 查询列表
+    this.getCompanyFinanceList(param);
+    wx.stopPullDownRefresh;
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
-    var pageNo = this.data.pageNo + 1;
-    var maxPageNo = this.data.companyFinanceListCount % this.data.pageSize == 0 ? this.data.companyFinanceListCount / this.data.pageSize : parseInt(this.data.companyFinanceListCount / this.data.pageSize) + 1
-    console.log(pageNo);
-    console.log(maxPageNo);
-    if (pageNo > maxPageNo) {
-      console.log("already end");
-      return ;
+  loadMore: function() {
+    var pageNo = this.data.pageNo;
+    var maxPageNo = this.data.companyFinanceListCount % this.data.pageSize == 0 ? this.data.companyFinanceListCount / this.data.pageSize :                                parseInt(this.data.companyFinanceListCount / this.data.pageSize) + 1;
+    if (pageNo >= maxPageNo) {
+      this.setData({
+        scrollTip:true
+      });
+      var fadeOutTimeout = setTimeout(() => {
+        this.setData({
+          scrollTip: false
+        });
+        clearTimeout(fadeOutTimeout);
+      }, 2000);
+      return;
     }
+  
+    this.setData({
+      pageNo: this.data.pageNo + 1
+    });
+
+    
+    pageNo = this.data.pageNo;
     var param = {
       pageNo: pageNo,
       pageSize: this.data.pageSize
@@ -89,15 +99,14 @@ Page({
   /**
    * 获取采购管理列表
    */
-  getCompanyFinanceList : function(data) {
+  getCompanyFinanceList: function(data) {
     var that = this;
     util.https(config.APIURL.getCompanyFinanceListUrl, "POST", data,
-      function (data) {
-        console.log(data);
+      function(data) {
         if (data.code == 0) {
           that.setData({
-            companyFinanceListData : data.data.data,
-            companyFinanceListCount : data.data.totalCount
+            companyFinanceListData: that.data.companyFinanceListData.concat(data.data.data),
+            companyFinanceListCount: data.data.totalCount
           })
         }
       }
